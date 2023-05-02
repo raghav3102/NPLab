@@ -1,47 +1,40 @@
 #include<stdio.h>
 #include<string.h>
-main(){
-char a[20],b[20];
-int i,n,j;
-char f,s;
-printf("Enter the size of the frame : ");
-scanf("%d",&n);
-n=n*2;
-printf("\nEnter the characters in frame : \n");
-for(i=0;i<n;i++)
-scanf("%c",&a[i]);
-printf("\n FRAME \n ");
-for(i=0;i<n;i++)
-printf("%c",a[i]);
-j=0;
-for(i=0;i<n;i++)
+#include<stdlib.h>
+char res[100];
+void sender()
 {
-if(a[i]=='f')
+ int n,i,len;
+ char frm[100],l[100];
+ printf("Enter the number of frames\n");
+ scanf("%d",&n);
+ for(i=0;i<n;i++)
 {
-b[j]='s';
-j++;
-b[j]=a[i];
-
-
-
+ printf("Enter the frame %d\n",i+1);
+ scanf("%s",&frm);
+ len=strlen(frm);
+ sprintf(l,"%d",len);
+ strcat(l,frm);
+ strcat(res,l);
 }
-else if(a[i]=='s')
+ printf("The final message is %s\n",res);
+}
+void reciever()
 {
-b[j]='s';
-j++;
-b[j]=a[i];
-}
-else
-b[j]=a[i];
-
-
-
-j++;
-}
-printf("\n MESSAGE \n");
-for(i=0;i<j;i++)
+ int len,i,j;
+ printf("Received frame \n");
+ for(i=0;i<strlen(res);i++)
 {
-printf("%c ",b[i]);
-}
+len=res[i]-'0';
+for(j=i+1;j<=(i+len);j++)
+printf("%c",res[j]);
+i=i+len;
 printf("\n");
+}
+}
+void main()
+{
+ sender();
+ reciever();
+ return 0;
 }
