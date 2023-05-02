@@ -32,7 +32,7 @@ i=i+len;
 printf("\n");
 }
 }
-void main()
+int main()
 {
  sender();
  reciever();
