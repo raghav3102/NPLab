@@ -1,3 +1,5 @@
+//C Program to implement Bit Stuffing, encoding and decoding concept in DDL
+
 #include<stdio.h>
 #include<string.h>
 void main()
