@@ -1,56 +1,33 @@
-#include <stdio.h>
-#include <string.h>
-
-void bitStuffing(int N, int arr[])
+#include<stdio.h>
+#include<string.h>
+void main()
 {
-
-	int brr[30];
-	int i, j, k;
-	i = 0;
-	j = 0;
-	while (i < N) {
-		if (arr[i] == 1) {
-			int count = 1;
-			brr[j] = arr[i];
-			for (k = i + 1; arr[k] == 1 && k < N && count < 5; k++) 
-			{
-				j++;
-				brr[j] = arr[k];
-				count++;
-				if (count == 5)
-				{
-					j++;
-					brr[j] = 0;
-				}
-				i = k;
-			}
-		}
-		else 
-		{
-			brr[j] = arr[i];
-		}
-		i++;
-		j++;
-	}
-	printf("The New array after bit stuffing is: \n");
-	for (i = 0; i < j; i++)
-		printf("%d ", brr[i]);
-		printf("\n");
+    int n, i;
+    printf("Enter size of frame");
+    scanf("%d",&n);
+    int frame[n];
+    printf("Enter the frame\n");
+    for(i=0;i<n;i++)
+    {
+        scanf("%d",&frame[i]);
+    }
+    int count=0;
+    for(i=0;i<n;i++)
+    {
+        if(count==5&&frame[i]==1)
+        {
+            printf("01");
+            count=1;
+        }
+        else if(count<5&&frame[i]==1)
+        {
+            count++;
+            printf("1");
+        }
+        else if(frame[i]==0)
+        {
+            printf("0");
+            count=0;
+        }
+    }
 }
-
-int main()
-{	
-	int i;
-	int N;
-	int arr[10];
-	printf("Enter the array size: \n");
-	scanf("%d", &N);
-	printf("Enter the array: \n");
-	for(i=0;i<N;i++)
-	scanf("%d", &arr[i]);
-
-	bitStuffing(N, arr);
-
-	return 0;
-}
-
