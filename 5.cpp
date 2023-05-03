@@ -1,6 +1,7 @@
-#include <bits/stdc++.h>
-using namespace std;
-int main()
+// C Program to implement Congestion control using Leaky Bucket algorithm
+
+#include <stdio.h>
+void main()
 {
 	int no_of_queries, storage, output_pkt_size;
 	int input_pkt_size, bucket_size, size_left;
