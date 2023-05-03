@@ -11,6 +11,17 @@ void XOR(){
     for(j = 1;j < N; j++)
     check_value[j] = (( check_value[j] == gen_poly[j])?'0':'1');
 }
+void crc(){
+    for(i=0;i<N;i++)
+        check_value[i]=data[i];
+    do{
+        if(check_value[0]=='1')
+            XOR();
+        for(j=0;j<N-1;j++)
+            check_value[j]=check_value[j+1];
+        check_value[j]=data[i++];
+    }while(i<=data_length+N-1);
+}
 void receiver(){
     printf("Enter the received data: ");
     scanf("%s", data);
@@ -23,18 +34,6 @@ void receiver(){
         else
             printf("\nNo error detected\n\n");
 }
-void crc(){
-    for(i=0;i<N;i++)
-        check_value[i]=data[i];
-    do{
-        if(check_value[0]=='1')
-            XOR();
-        for(j=0;j<N-1;j++)
-            check_value[j]=check_value[j+1];
-        check_value[j]=data[i++];
-    }while(i<=data_length+N-1);
-}
-
 int main()
 {
     printf("\nEnter data to be transmitted: ");
