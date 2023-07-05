@@ -57,6 +57,6 @@ int main(){
 	
 
 
-//To run this program in the ubuntu terminal, use the following commands:
-gcc filename.c -o client
-./client
+// To run this program in the ubuntu terminal, use the following commands:
+// gcc filename.c -o client
+// ./client
