@@ -17,7 +17,7 @@ void func(int connectID){
 		bzero(buffer,MAX);
 		read(connectID,buffer,sizeof(buffer));
 		printf("From Client: %s \n To Client: \n",buffer);
-		bzero(buffer,size);
+		bzero(buffer,MAX);
 		n = 0;
 		while((buffer[n++]=getchar())!='\n');
 		write(connectID,buffer,sizeof(buffer));
