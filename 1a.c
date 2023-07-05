@@ -1,42 +1,36 @@
-//C Program to count the number of bytes sent and display each frame received
-
 #include<stdio.h>
 #include<string.h>
-#include<stdlib.h>
 char res[100];
-void sender()
-{
- int n,i,len;
- char frm[100],l[100];
- printf("Enter the number of frames\n");
- scanf("%d",&n);
- for(i=0;i<n;i++)
-{
- printf("Enter the frame %d\n",i+1);
- scanf("%s",&frm);
- len=strlen(frm);
- sprintf(l,"%d",len);
- strcat(l,frm);
- strcat(res,l);
+void sender(){
+    int i,len,n;
+    char f[100],l[100];
+    printf("Enter the number of frames: \n");
+    scanf("%d",&n);
+    for(i=0;i<n;i++){
+        printf("Enter the frame %d: \n",i+1);
+        scanf("%s",f);
+        len = strlen(f);
+        sprintf(l,"%d",len);
+        printf("Size of frame %d: %d \n",i+1,len);
+        strcat(l,f);
+        strcat(res,l);
+    }
+    printf("The final message is : %s \n",res);
 }
- printf("The final message is %s\n",res);
+void receiver(){
+    int i,j,l;
+    printf("The received frame is: ");
+    for(i=0;i<strlen(res);i++){
+        l = res[i] - '0';
+        for(j=i;j<(i+l);j++){
+            printf("%c ",res[j]);
+            i = i + l;
+        }
+    }
+    printf("\n");
 }
-void reciever()
-{
- int len,i,j;
- printf("Received frame \n");
- for(i=0;i<strlen(res);i++)
-{
-len=res[i]-'0';
-for(j=i+1;j<=(i+len);j++)
-printf("%c",res[j]);
-i=i+len;
-printf("\n");
-}
-}
-int main()
-{
- sender();
- reciever();
- return 0;
+int main(){
+    sender();
+    receiver();
+    return 0;
 }
