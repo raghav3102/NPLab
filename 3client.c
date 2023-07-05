@@ -1,67 +1,62 @@
-// TCP Client 
-
-#include <stdio.h>
-#include <stdlib.h>
-#include <unistd.h>
-#include <string.h>
-#include <arpa/inet.h>
-
-#define SIZE 1024
-
-void send_file(FILE *fp, int sockfd)
-{
-	char data[SIZE] = {0};
-
-	while(fgets(data, SIZE, fp)!=NULL)
-	{
-    	if(send(sockfd, data, sizeof(data), 0)== -1)
-    	{
-        	perror("[-] Error in sendung data");
-        	exit(1);
-    	}
-    	bzero(data, SIZE);
+#include<stdio.h>
+#include<stdlib.h>
+#include<string.h>
+#include<netdb.h>
+#include<netinet/in.h>
+#include<sys/types.h>
+#include<sys/socket.h>
+#include<arpa/inet.h>
+#include<unistd.h>
+#define MAX 80
+#define PORT 8080
+#define SA struct sockaddr
+void func(int sockfd){
+	char buffer[MAX];
+	int n;
+	for(;;){
+		bzero(buffer,sizeof(buffer));
+		printf("Enter the string: \n");
+		n = 0;
+		while((buffer[n++]=getchar()) != 0);
+		write(sockfd,buffer,sizeof(buffer));
+		bzero(buffer,sizeof(buffer));
+		read(sockfd,buffer,sizeof(buffer));
+		printf("From the server: %s \n",buffer);
+		if((strncmp("exit",buffer,4)) != 0){
+			printf("Client closing \n");
+			break;
+		}
 	}
 }
-
-int main()
-{
-	char *ip = "127.0.0.1";
-	int port = 8080;
-	int e;
-
+int main(){
 	int sockfd;
-	struct sockaddr_in server_addr;
-	FILE *fp;
-	char *filename = "file.txt";
- 	sockfd = socket(AF_INET, SOCK_STREAM, 0);
-	if(sockfd<0)
-	{
-    	perror("[-]Error in socket");
-    	exit(1);
+	struct socketAddress_in clientAddress;
+	sockfd = socket(AF_INET,SOCK_STREAM,0);
+	if(sockfd == -1){
+		printf("Socket not created \n");
+		exit(0);
 	}
- 	printf("[+]Server socket created. \n");
-
- 	server_addr.sin_family = AF_INET;
- 	server_addr.sin_port = port;
- 	server_addr.sin_addr.s_addr = inet_addr(ip);
-
- 	e = connect(sockfd, (struct sockaddr*)&server_addr, sizeof(server_addr));
- 	if(e == -1)
- 	{
-     	perror("[-]Error in Connecting");
-     	exit(1);
- 	}
- 	printf("[+]Connected to server.\n");
- 	fp = fopen(filename, "r");
- 	if(fp == NULL)
- 	{
-     	perror("[-]Error in reading file.");
-     	exit(1);
- 	}
- 	send_file(fp,sockfd);
- 	printf("[+] File data send successfully. \n");
- 	close(sockfd);
- 	printf("[+]Disconnected from the server. \n");
- 	return 0;
-
+	else{
+		printf("Socket created sucessfully \n");
+	}
+	bzero(&clientAddress,sizeof(clientAddress));
+	clientAddress.sin_family = AF_INET;
+	clientAddress.sin_addr.s_addr = inet_addr("127.0.0.1");
+	clientAddress.sin_port = htons(PORT);
+	if((connect(sockfd,(SA *)&clientAddress,sizeof(clientAddress))) != 0){
+		printf("Connection unsuccessful \n");
+		exit(0);
+	}
+	else {
+		printf("Successfully connected \n");
+	}
+	func(sockfd);
+	close(sockfd);
+	return 0;
 }
+	
+
+
+//To run this program in the ubuntu terminal, use the following commands:
+gcc filename.c -o client
+./client
