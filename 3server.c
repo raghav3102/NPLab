@@ -72,5 +72,5 @@ int main(){
 
 
 // To run this code in terminal, give the following command:
-gcc filename.c -o server
-./server
+// gcc filename.c -o server
+// ./server
