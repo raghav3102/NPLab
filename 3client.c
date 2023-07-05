@@ -17,7 +17,7 @@ void func(int sockfd){
 		bzero(buffer,sizeof(buffer));
 		printf("Enter the string: \n");
 		n = 0;
-		while((buffer[n++]=getchar()) != 0);
+		while((buffer[n++]=getchar()) != '\n');
 		write(sockfd,buffer,sizeof(buffer));
 		bzero(buffer,sizeof(buffer));
 		read(sockfd,buffer,sizeof(buffer));
